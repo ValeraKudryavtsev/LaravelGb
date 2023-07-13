@@ -8,15 +8,8 @@ class CategoriesController extends Controller
 {
     public function index(): View
     {
-        return view('categories.index', [
+        return view('user.categories.index', [
             'categoriesList' => $this->getCategories(),
-        ]);
-    }
-
-    public function show(int $id): View
-    {
-        return view('categories.show', [
-            'categories' => $this->getCategories($id),
         ]);
     }
 }
