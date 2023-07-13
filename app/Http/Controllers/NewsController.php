@@ -11,14 +11,14 @@ class NewsController extends Controller
 {
     public function index(): View
     {
-        return view('news.index', [
+        return view('user.news.index', [
             'newsList' => $this->getNews(),
         ]);
     }
 
     public function show(int $id): View
     {
-        return view('news.show', [
+        return view('user.news.show', [
             'news' => $this->getNews($id),
         ]);
     }

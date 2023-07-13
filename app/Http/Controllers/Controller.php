@@ -45,7 +45,7 @@ class Controller extends BaseController
             ];
         }
 
-        $quantityNews = 5;
+        $quantityNews = 7;
         $news = [];
         for ($i=0; $i < $quantityNews; $i++) {
             $news[] = [
