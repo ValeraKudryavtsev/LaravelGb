@@ -44,3 +44,6 @@ Route::get('/categories/news/{id}', [NewsController::class, 'show'])
     ->where('id', '\d+')
     ->where('cid', '\d+')
     ->name('user.news.show');
+Route::get('/test', function() {
+    return response()->download('robots.txt');
+});
