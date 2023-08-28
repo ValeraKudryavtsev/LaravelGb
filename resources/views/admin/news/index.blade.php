@@ -30,23 +30,23 @@
                 <th scope="col">Действия</th>
             </tr>
             </thead>
-            <tbody>
-            @forelse($newsList as $news)
-                <tr>
-                    <td>{{ $news->id }}</td>
-                    <td>{{ $news->category->title }}</td>
-                    <td>{{ $news->title }}</td>
-                    <td>{{ $news->author }}</td>
-                    <td>{{ $news->status }}</td>
-                    <td>{{ $news->created_at }}</td>
-                    <td><a href="{{ route('admin.news.edit', ['news' => $news]) }}">Edit</a> &nbsp; <a href="javascript:;" class="delete" rel="{{ $news->id }}">Delete</a></td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="6">Записей не найдено</td>
-                </tr>
-            @endforelse
-            </tbody>
+           <tbody>
+             @forelse($newsList as $news)
+                 <tr>
+                     <td>{{ $news->id }}</td>
+                     <td>{{ $news->category->title }}</td>
+                     <td>{{ $news->title }}</td>
+                     <td>{{ $news->author }}</td>
+                     <td>{{ $news->status }}</td>
+                     <td>{{ $news->created_at }}</td>
+                     <td><a href="{{ route('admin.news.edit', ['news' => $news]) }}">Edit</a> &nbsp; <a href="javascript:;" class="delete" rel="{{ $news->id }}">Delete</a></td>
+                 </tr>
+             @empty
+                 <tr>
+                     <td colspan="6">Записей не найдено</td>
+                 </tr>
+             @endforelse
+           </tbody>
         </table>
 
         {{ $newsList->links() }}
@@ -57,21 +57,21 @@
         document.addEventListener("DOMContentLoaded", function() {
             let filter = document.getElementById("filter");
             filter.addEventListener("change", function (event) {
-                location.href = "?f=" + this.value;
-            });
+               location.href = "?f=" + this.value;
+           });
 
             let elements = document.querySelectorAll(".delete");
             elements.forEach(function (element, key) {
-                element.addEventListener('click', function() {
-                    const id = this.getAttribute('rel');
-                    if (confirm(`Подтверждаете удаление записи с #ID = ${id}`)) {
-                        send(`/admin/news/${id}`).then( () => {
-                            location.reload();
-                        });
-                    } else {
-                        alert("Вы отменили удаление записи");
-                    }
-                });
+               element.addEventListener('click', function() {
+               const id = this.getAttribute('rel');
+               if (confirm(`Подтверждаете удаление записи с #ID = ${id}`)) {
+                   send(`/admin/news/${id}`).then( () => {
+                      location.reload();
+                   });
+               } else {
+                   alert("Вы отменили удаление записи");
+               }
+               });
             });
         });
 

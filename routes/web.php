@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
-use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\NewsController;
-use \App\Http\Controllers\CategoriesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,30 +22,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Admin
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function () {
-    Route::get('/', AdminController::class)->name('index');
-    Route::resource('/categories', AdminCategoryController::class);
-    Route::resource('/news', AdminNewsController::class);
-});
-
-//Greeting
-Route::get('/greeting', function () {
-    return view('user.greeting');
+Route::group(['middleware' => 'auth'], function() {
+   Route::get('/account', AccountController::class)->name('account');
+    //Admin
+   Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'is.admin'], static function () {
+      Route::get('/', AdminController::class)->name('index');
+      Route::resource('/categories', AdminCategoryController::class);
+      Route::resource('/news', AdminNewsController::class);
+   });
 });
 
 //News
-Route::get('/categories', [CategoriesController::class, 'index'])
-    ->name('user.categories.index');
-Route::get('/categories/news', [NewsController::class, 'index'])
-    ->where('cid', '\d+')
-    ->name('user.news.index');
-Route::get('/categories/news/{id}', [NewsController::class, 'show'])
+Route::get('/news', [NewsController::class, 'index'])
+    ->name('news.index');
+Route::get('/news/{id}', [NewsController::class, 'show'])
     ->where('id', '\d+')
-    ->where('cid', '\d+')
-    ->name('user.news.show');
+    ->name('news.show');
+
 Route::get('/test', function() {
-    return response()->download('robots.txt');
+   return response()->download('robots.txt');
 });
 
 Route::get('/collection', function () {
@@ -55,3 +50,18 @@ Route::get('/collection', function () {
         return $item;
     })->toArray());
 });
+
+Route::get('/session', function () {
+    $key = 'test';
+
+    if (session()->has($key)) {
+       // session()->forget($key);
+        dd(session()->all(), session()->get($key));
+    }
+
+    session()->put($key, 'Some value');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
