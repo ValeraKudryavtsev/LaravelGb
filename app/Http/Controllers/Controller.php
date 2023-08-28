@@ -12,25 +12,6 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    public function getCategories(int $cid = null): array
-    {
-        if ($cid !== null) {
-            return [
-                'cid' => $cid,
-                'title' => fake()->jobTitle()
-            ];
-        }
-
-        $categories = [];
-        for ($i=0; $i < 6; $i++) {
-            $categories[] = [
-                'cid' => ($i === 0) ? ++$i : $i,
-                'title' => fake()->jobTitle()
-            ];
-        }
-
-        return $categories;
-    }
     public function getNews(int $id = null): array
     {
         if ($id !== null) {
@@ -45,7 +26,7 @@ class Controller extends BaseController
             ];
         }
 
-        $quantityNews = 7;
+        $quantityNews = 10;
         $news = [];
         for ($i=0; $i < $quantityNews; $i++) {
             $news[] = [
@@ -54,7 +35,7 @@ class Controller extends BaseController
                 'author' => fake()->userName(),
                 'image'  => fake()->imageUrl(200, 150),
                 'status' => 'ACTIVE',
-                'description' => fake()->text(100),
+                'description' => fake()->text(100) ,
                 'created_at' => now()->format('d-m-Y H:i'),
             ];
         }

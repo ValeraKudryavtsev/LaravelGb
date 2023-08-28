@@ -26,11 +26,11 @@ class News extends Model
 
     public function scopeStatus(Builder $query): Builder
     {
-        if (request()->has('f')) {
-            return $query->where('status', request()->query('f', 'draft'));
-        }
+       if (request()->has('f')) {
+           return $query->where('status', request()->query('f', 'draft'));
+       }
 
-        return $query;
+       return $query;
     }
 
 
