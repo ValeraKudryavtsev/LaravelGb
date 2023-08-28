@@ -44,13 +44,13 @@ class NewsController extends Controller
      */
     public function store(Create $request)
     {
-        $news = new News($request->validated());
+       $news = new News($request->validated());
 
-        if ($news->save()) {
-            return redirect()->route('admin.news.index')->with('success', __('News was saved successfully'));
-        }
+       if ($news->save()) {
+           return redirect()->route('admin.news.index')->with('success', __('News was saved successfully'));
+       }
 
-        return back()->with('error', __('We can not save item, pleas try again'));
+       return back()->with('error', __('We can not save item, pleas try again'));
     }
 
     /**
